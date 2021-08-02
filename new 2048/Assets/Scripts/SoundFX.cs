@@ -1,0 +1,108 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine;
+using System;
+
+public class SoundFX : MonoBehaviour
+{
+    public static SoundFX Instance { get; private set; }
+
+    // menu FX
+    private AudioSource m_SwipeMenuFX;
+    private AudioSource m_PushBtnFX;
+    private AudioSource m_Alert;
+    private AudioSource m_OnOff;
+
+    // game FX
+    private AudioSource m_MatchTiles;
+    private AudioSource m_UndoSpecial;
+    private AudioSource m_ContinueSpecial;
+    private AudioSource m_GameOver;
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        // preload SwipeMenuFX
+        m_SwipeMenuFX = gameObject.AddComponent<AudioSource>();
+        m_SwipeMenuFX.clip = Resources.Load("LevelSelect") as AudioClip;
+
+        // preload ClickButton FX
+        m_PushBtnFX = gameObject.AddComponent<AudioSource>();
+        m_PushBtnFX.clip = Resources.Load("PushBtn") as AudioClip;
+
+        // preload Alert FX
+        m_Alert = gameObject.AddComponent<AudioSource>();
+        m_Alert.clip = Resources.Load("Alert") as AudioClip;
+
+        // preload On Off FX
+        m_OnOff = gameObject.AddComponent<AudioSource>();
+        m_OnOff.clip = Resources.Load("OnOff") as AudioClip;
+
+        // preload Match Tiles Pop FX
+        m_MatchTiles = gameObject.AddComponent<AudioSource>();
+        m_MatchTiles.clip = Resources.Load("MatchTilesPop") as AudioClip;
+
+        // preload Special Undo FX
+        m_UndoSpecial = gameObject.AddComponent<AudioSource>();
+        m_UndoSpecial.clip = Resources.Load("SpecialMoveUndo") as AudioClip;
+
+        // preload Special Continue FX
+        m_ContinueSpecial = gameObject.AddComponent<AudioSource>();
+        m_ContinueSpecial.clip = Resources.Load("SpecialMoveContinue") as AudioClip;
+
+        // preload Game Over FX
+        m_GameOver = gameObject.AddComponent<AudioSource>();
+        m_GameOver.clip = Resources.Load("Alert") as AudioClip;
+    }
+
+    public void SelectLevelFX()
+    {
+        m_SwipeMenuFX.Play();
+    }
+
+    public void PushBtnFX()
+    {
+        m_PushBtnFX.Play();
+    }
+
+    public void AlertFX()
+    {
+        m_Alert.Play();
+    }
+    
+    public void OnOffFX()
+    {
+        m_OnOff.Play();
+    }
+
+    public void MatchTilesFX()
+    {
+        m_MatchTiles.Play();
+    }
+
+    public void SpecialUndoFX()
+    {
+        m_UndoSpecial.Play();
+    }
+
+    public void SpecialContinueExtraFX()
+    {
+        m_ContinueSpecial.Play();
+    }
+    
+    public void GameOverFX()
+    {
+        m_GameOver.Play();
+    }
+}
