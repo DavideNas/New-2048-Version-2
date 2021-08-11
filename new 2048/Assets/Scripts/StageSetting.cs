@@ -36,6 +36,4 @@ public class StageSetting : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-
 }

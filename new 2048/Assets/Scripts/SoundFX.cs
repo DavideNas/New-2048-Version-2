@@ -8,13 +8,13 @@ public class SoundFX : MonoBehaviour
 {
     public static SoundFX Instance { get; private set; }
 
-    // menu FX
+    // Menu FX
     private AudioSource m_SwipeMenuFX;
-    private AudioSource m_PushBtnFX;
+    private AudioSource m_ClickFX;
     private AudioSource m_Alert;
     private AudioSource m_OnOff;
 
-    // game FX
+    // Game FX
     private AudioSource m_MatchTiles;
     private AudioSource m_UndoSpecial;
     private AudioSource m_ContinueSpecial;
@@ -38,8 +38,8 @@ public class SoundFX : MonoBehaviour
         m_SwipeMenuFX.clip = Resources.Load("LevelSelect") as AudioClip;
 
         // preload ClickButton FX
-        m_PushBtnFX = gameObject.AddComponent<AudioSource>();
-        m_PushBtnFX.clip = Resources.Load("PushBtn") as AudioClip;
+        m_ClickFX = gameObject.AddComponent<AudioSource>();
+        m_ClickFX.clip = Resources.Load("PushBtn") as AudioClip;
 
         // preload Alert FX
         m_Alert = gameObject.AddComponent<AudioSource>();
@@ -71,9 +71,9 @@ public class SoundFX : MonoBehaviour
         m_SwipeMenuFX.Play();
     }
 
-    public void PushBtnFX()
+    public void ClickFX()
     {
-        m_PushBtnFX.Play();
+        m_ClickFX.Play();
     }
 
     public void AlertFX()
