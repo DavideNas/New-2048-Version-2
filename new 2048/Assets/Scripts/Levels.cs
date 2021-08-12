@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Levels : MonoBehaviour
 {
+    private void Start() {
+        ControlManager.Instance.DepthTile = 5;
+    }
+
     public static void Grid3x3()
     {
-        StageSetting.Instance.GridSize = 3;
-        StageSetting.Instance.NewTilesPerMove = 1;
+        ControlManager.Instance.GridSize = 3;
+        ControlManager.Instance.NewTilesPerMove = 1;
         if (/*SaveSystem.DataExists()*/false)
         {
             //Instance.PopupContinue.SetActive(true);
@@ -16,7 +20,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
-            StageSetting.Instance.NewGame = true;
+            ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
         }
@@ -24,8 +28,8 @@ public class Levels : MonoBehaviour
 
     public static void Grid4x4()
     {
-        StageSetting.Instance.GridSize = 4;
-        StageSetting.Instance.NewTilesPerMove = 1;
+        ControlManager.Instance.GridSize = 4;
+        ControlManager.Instance.NewTilesPerMove = 1;
         if (/*SaveSystem.DataExists()*/false)
         {
             //Instance.PopupContinue.SetActive(true);
@@ -33,7 +37,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
-            StageSetting.Instance.NewGame = true;
+            ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
         }
@@ -41,8 +45,8 @@ public class Levels : MonoBehaviour
 
     public static void Grid5x5()
     {
-        StageSetting.Instance.GridSize = 5;
-        StageSetting.Instance.NewTilesPerMove = 2;
+        ControlManager.Instance.GridSize = 5;
+        ControlManager.Instance.NewTilesPerMove = 2;
         if (/*SaveSystem.DataExists()*/false)
         {
             //Instance.PopupContinue.SetActive(true);
@@ -50,7 +54,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
-            StageSetting.Instance.NewGame = true;
+            ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
         }
@@ -58,8 +62,8 @@ public class Levels : MonoBehaviour
 
     public static void Grid6x6()
     {
-        StageSetting.Instance.GridSize = 6;
-        StageSetting.Instance.NewTilesPerMove = 3;
+        ControlManager.Instance.GridSize = 6;
+        ControlManager.Instance.NewTilesPerMove = 3;
         if (/*SaveSystem.DataExists()*/false)
         {
             //Instance.PopupContinue.SetActive(true);
@@ -67,7 +71,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
-            StageSetting.Instance.NewGame = true;
+            ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
         }
@@ -75,8 +79,8 @@ public class Levels : MonoBehaviour
 
     public static void Grid8x8()
     {
-        StageSetting.Instance.GridSize = 8;
-        StageSetting.Instance.NewTilesPerMove = 4;
+        ControlManager.Instance.GridSize = 8;
+        ControlManager.Instance.NewTilesPerMove = 4;
         if (/*SaveSystem.DataExists()*/false)
         {
             //Instance.PopupContinue.SetActive(true);
@@ -84,7 +88,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
-            StageSetting.Instance.NewGame = true;
+            ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
         }

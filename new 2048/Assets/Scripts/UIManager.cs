@@ -3,73 +3,70 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-
-    public GameObject PopupContinue;
-
-    public GameObject SettingView;
     
-    // UI Sound Button
-    public GameObject SoundOn;
-    public GameObject SoundOff;
+    public GameObject SettingView;
+
+    public GameObject Menu;
+
+    public Text levelSize;
+
+    public Text version;
 
     // UI Connection Button
-    public GameObject PlayConnected;
+    public GameObject PlayDisconnected;
     public GameObject PlayConnectionPending;
     public GameObject PlayConnectionError;
-    public GameObject PlayDisconnected;
+    public GameObject PlayConnected;
 
-    public Text ScoreRecord;
-
-    [SerializeField]
-    private Text versionTxt;
-
-    public Text Version {
-        get { return versionTxt; }
-        set { versionTxt = value; }
-    }
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
+    private void Start() {
+        if (null == Instance)
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-            Destroy(gameObject);
-    }
+    
+        if (null != levelSize)
+            levelSize.text = ControlManager.Instance.GridSize.ToString() + "x" + ControlManager.Instance.GridSize.ToString();
 
-    public static void SwitchSound(bool soundState)
-    {
-        if (soundState)
-        {
-            // script to disable sound
-            ControlManager.Instance.UpdateSoundStatus(!soundState);
-        }
-        else
-        {
-            // script to enable sound
-            ControlManager.Instance.UpdateSoundStatus(!soundState);
+        if (null != version)
+            version.text = ControlManager.Instance.CurrentVersion;
+
+        if (ControlManager.Instance.GPlayConnection) {
+            Instance.PlayConnected.SetActive(true);
+            Instance.PlayDisconnected.SetActive(false);
         }
     }
-
-    // open settings
+    
+    // Open settings
     public static void BtnOpenSettings()
     {
         SoundFX.Instance.ClickFX();
         Instance.SettingView.SetActive(true);
-        Instance.VersionUpdate();
+        //VersionUpdate();
     }
 
-    // close settings
+    // Close settings
     public static void BtnCloseSettings()
     {
-        Instance.SettingView.SetActive(false);
         SoundFX.Instance.ClickFX();
+        Instance.SettingView.SetActive(false);
+    }
+
+    // Open menu
+    public static void BtnOpenMenu()
+    {
+        SoundFX.Instance.ClickFX();
+        Instance.Menu.SetActive(true);
+        //VersionUpdate();
+    }
+
+    // Close menu
+    public static void BtnCloseMenu()
+    {
+        SoundFX.Instance.ClickFX();
+        Instance.Menu.SetActive(false);
     }
 
     public static void BtnGPlayConnection()
@@ -87,7 +84,51 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public static void LookGridLeaderboard()
+    public static void BtnHome()
+    {
+        SoundFX.Instance.ClickFX();
+        //AdsManager.Instance.ShowAd(null);
+        //Utils.SaveState();
+        SceneManager.LoadScene("Main");
+    }
+
+/*  public static void VersionUpdate()
+    {
+        version.text = ControlManager.Instance.CurrentVersion;
+    }*/
+
+    /*public GameObject PopupContinue;
+
+    // UI Sound Button
+    public GameObject SoundOn;
+    public GameObject SoundOff;
+
+    public Text ScoreRecord;
+
+    [SerializeField]
+    private Text versionTxt;
+
+    public Text Version {
+        get { return versionTxt; }
+        set { versionTxt = value; }
+    }
+
+    public static void SwitchSound(bool soundState)
+    {
+        if (soundState)
+        {
+            // script to disable sound
+            ControlManager.Instance.UpdateSoundStatus(!soundState);
+        }
+        else
+        {
+            // script to enable sound
+            ControlManager.Instance.UpdateSoundStatus(!soundState);
+        }
+    }
+*/
+
+/*    public static void LookGridLeaderboard()
     {
         PlayGamesScript.GuardaClassificaGrid(StageSetting.Instance.GridSize);
     }
@@ -106,9 +147,5 @@ public class UIManager : MonoBehaviour
     {
         return WWW.EscapeURL(url).Replace("+", "%20");
     }
-
-    public void VersionUpdate()
-    {
-        Instance.Version.text = ControlManager.Instance.CurrentVersion;
-    }
+*/
 }

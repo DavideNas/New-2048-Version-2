@@ -134,7 +134,7 @@ public class PlayGamesScript : MonoBehaviour
                             }
                         }
                         string msg = "my best 3x3: " + myTopScore;
-                        UIManager.Instance.ScoreRecord.text = myTopScore;
+                        //UIManager.ScoreRecord.text = myTopScore;
                     }
                 });
                 break;
@@ -151,7 +151,7 @@ public class PlayGamesScript : MonoBehaviour
                             }
                         }
                         string msg = "my best 4x4: " + myTopScore;
-                        UIManager.Instance.ScoreRecord.text = myTopScore;
+                        //UIManager.ScoreRecord.text = myTopScore;
                     }
                 });
                 break;
@@ -168,7 +168,7 @@ public class PlayGamesScript : MonoBehaviour
                             }
                         }
                         string msg = "my best 5x5: " + myTopScore;
-                        UIManager.Instance.ScoreRecord.text = myTopScore;
+                        //UIManager.ScoreRecord.text = myTopScore;
                     }
                 });
                 break;
@@ -185,7 +185,7 @@ public class PlayGamesScript : MonoBehaviour
                             }
                         }
                         string msg = "my best 6x6: " + myTopScore;
-                        UIManager.Instance.ScoreRecord.text = myTopScore;
+                        //UIManager.ScoreRecord.text = myTopScore;
                     }
                 });
                 break;
@@ -202,7 +202,7 @@ public class PlayGamesScript : MonoBehaviour
                             }
                         }
                         string msg = "my best 8x8: " + myTopScore;
-                        UIManager.Instance.ScoreRecord.text = myTopScore;
+                        //UIManager.ScoreRecord.text = myTopScore;
                     }
                 });
                 break;
