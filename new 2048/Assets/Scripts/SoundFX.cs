@@ -68,41 +68,50 @@ public class SoundFX : MonoBehaviour
 
     public void SelectLevelFX()
     {
-        m_SwipeMenuFX.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_SwipeMenuFX.Play();
     }
 
     public void ClickFX()
     {
-        m_ClickFX.Play();
+        Debug.Log(ControlManager.Instance.SoundFx);
+        if (ControlManager.Instance.SoundFx)
+            m_ClickFX.Play();
     }
 
     public void AlertFX()
     {
-        m_Alert.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_Alert.Play();
     }
     
     public void OnOffFX()
     {
-        m_OnOff.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_OnOff.Play();
     }
 
     public void MatchTilesFX()
     {
-        m_MatchTiles.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_MatchTiles.Play();
     }
 
     public void SpecialUndoFX()
     {
-        m_UndoSpecial.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_UndoSpecial.Play();
     }
 
     public void SpecialContinueExtraFX()
     {
-        m_ContinueSpecial.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_ContinueSpecial.Play();
     }
     
     public void GameOverFX()
     {
-        m_GameOver.Play();
+        if (ControlManager.Instance.SoundFx)
+            m_GameOver.Play();
     }
 }

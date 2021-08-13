@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
 
     public Text version;
 
+    // UI Sound Button
+    public GameObject SoundOn;
+    public GameObject SoundOff;
+
     // UI Connection Button
     public GameObject PlayDisconnected;
     public GameObject PlayConnectionPending;
@@ -37,6 +41,15 @@ public class UIManager : MonoBehaviour
             Instance.PlayConnected.SetActive(true);
             Instance.PlayDisconnected.SetActive(false);
         }
+
+        // Auto connect
+        if (false == ControlManager.Instance.GPlayConnection)
+            BtnGPlayConnection();
+
+        if (!ControlManager.Instance.SoundFx) {
+            Instance.SoundOn.SetActive(false);
+            Instance.SoundOff.SetActive(true);
+        }
     }
     
     // Open settings
@@ -44,7 +57,6 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         Instance.SettingView.SetActive(true);
-        //VersionUpdate();
     }
 
     // Close settings
@@ -59,7 +71,6 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         Instance.Menu.SetActive(true);
-        //VersionUpdate();
     }
 
     // Close menu
@@ -67,6 +78,12 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         Instance.Menu.SetActive(false);
+    }
+
+    public static void SwitchSound()
+    {
+        // Call function to Enable/Disable sound
+        ControlManager.Instance.UpdateSoundStatus();
     }
 
     public static void BtnGPlayConnection()
@@ -92,53 +109,17 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
-/*  public static void VersionUpdate()
-    {
-        version.text = ControlManager.Instance.CurrentVersion;
-    }*/
-
     /*public GameObject PopupContinue;
-
-    // UI Sound Button
-    public GameObject SoundOn;
-    public GameObject SoundOff;
 
     public Text ScoreRecord;
 
-    [SerializeField]
-    private Text versionTxt;
+    */
 
-    public Text Version {
-        get { return versionTxt; }
-        set { versionTxt = value; }
-    }
-
-    public static void SwitchSound(bool soundState)
-    {
-        if (soundState)
-        {
-            // script to disable sound
-            ControlManager.Instance.UpdateSoundStatus(!soundState);
-        }
-        else
-        {
-            // script to enable sound
-            ControlManager.Instance.UpdateSoundStatus(!soundState);
-        }
-    }
-*/
-
-/*    public static void LookGridLeaderboard()
-    {
-        PlayGamesScript.GuardaClassificaGrid(StageSetting.Instance.GridSize);
-    }
-
-    [System.Obsolete]
     public static void SendEmail()
     {
         string email = "brickpointgames@gmail.com";
         string subject = MyEscapeURL("Feedback New 2048 for Android");
-        string body = MyEscapeURL("Hi Brick Point Games,\r\n I've something to tell about New 2048 game for Android.\r\n");
+        string body = MyEscapeURL("Hi Brick Point Games,\r\n I've something to tell about New 2048 game for Android.\r");
         Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
     }
 
@@ -147,5 +128,15 @@ public class UIManager : MonoBehaviour
     {
         return WWW.EscapeURL(url).Replace("+", "%20");
     }
-*/
+
+    public static void LookGridLeaderboard()
+    {
+        PlayGamesScript.GuardaClassificaGrid(ControlManager.Instance.GridSize);
+    }
+
+    public static void BtnRateMe()
+    {
+        SoundFX.Instance.ClickFX();
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.brickpointgames.newdmqo");
+    }
 }

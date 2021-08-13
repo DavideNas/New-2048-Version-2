@@ -15,6 +15,9 @@ public class ControlManager : MonoBehaviour
     // # of new tiles spawned each turn
     private int newTilesPerMove = 1;
 
+    // status sound
+    public bool SoundFx = true;
+
     // Bool check for new game or not
     private bool newGame = true;
 
@@ -65,34 +68,36 @@ public class ControlManager : MonoBehaviour
     // Google connection status
     private bool googlePlayConnection;
     public bool GPlayConnection
-    { 
+    {
         get { return googlePlayConnection; }
         set { googlePlayConnection = value; }
     }
     
-/*  public void UpdateSoundStatus(bool soundStatus)
+    public void UpdateSoundStatus()
     {
-        if (soundStatus)
+        if (Instance.SoundFx)
         {
-            UIManager.SoundOn.SetActive(false);
-            UIManager.SoundOff.SetActive(true);
+            UIManager.Instance.SoundOn.SetActive(false);
+            UIManager.Instance.SoundOff.SetActive(true);
+            Instance.SoundFx = !Instance.SoundFx;
         }
         else
         {
-            UIManager.SoundOn.SetActive(true);
-            UIManager.SoundOff.SetActive(false);
+            UIManager.Instance.SoundOn.SetActive(true);
+            UIManager.Instance.SoundOff.SetActive(false);
+            Instance.SoundFx = !Instance.SoundFx;
         }
-    }*/
+    }
     
     public void SwitchConnection(bool connectionState)
     {
-        if (connectionState) 
+        if (connectionState)
         {
             // script to disable connection
             UIManager.Instance.PlayConnected.SetActive(true);
             UIManager.Instance.PlayDisconnected.SetActive(false);
         }
-        else 
+        else
         {
             // script to enable connection
             UIManager.Instance.PlayConnected.SetActive(false);
