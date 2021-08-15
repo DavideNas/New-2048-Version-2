@@ -5,37 +5,54 @@ using UnityEngine;
 public class ControlManager : MonoBehaviour
 {
     public static ControlManager Instance { get; private set; }
+    
+    // status sound
+    public bool SoundFx;
+
+    // Theme color of tiles
+    private string activeTheme;
+    public string ActiveTheme{ 
+        get{ return activeTheme; }
+        set{ activeTheme = value; }
+    }
+
+    // magnitude for swipe distance
+    private float magnitude;
+    public float Magnitude {
+        get{ return magnitude; }
+        set { magnitude = value; }
+    }
 
     // Depth of tiles in Z axis
-    public static float depthTile = 5f;
-    
-    // Size of grid
-    private int gridSize = 4;
-
-    // # of new tiles spawned each turn
-    private int newTilesPerMove = 1;
-
-    // status sound
-    public bool SoundFx = true;
-
-    // Bool check for new game or not
-    private bool newGame = true;
-
+    public static float depthTile;
     public float DepthTile {
         get { return depthTile; }
         set { depthTile = value; }
     }
 
+    // Size of grid
+    private int gridSize;
     public int GridSize {
         get { return gridSize; }
         set { gridSize = value; }
     }
 
+    // NOT USED
+    private float coinChance;
+    public float CoinChance { 
+        get{ return coinChance; }
+        set { coinChance = value; }
+    }
+
+    // # of new tiles spawned each turn
+    private int newTilesPerMove;    
     public int NewTilesPerMove {
         get { return newTilesPerMove; }
         set { newTilesPerMove = value; }
     }
 
+    // Bool check for new game or not
+    private bool newGame;
     public bool NewGame {
         get { return newGame; }
         set { newGame = value; }
@@ -55,6 +72,30 @@ public class ControlManager : MonoBehaviour
     private void Start()
     {
         CurrentVersion = Application.version + " - 23 (Main Release)";
+
+        CoinChance = 2f;
+
+        NewTilesPerMove = 1;
+
+        DepthTile = 5f;
+
+        TileSelect = "ClassicTile";
+
+        Magnitude = 125;
+
+        NewGame = true;
+
+        SoundFx = true;
+
+        ActiveTheme = "pastel";
+    }
+
+    // Tile type
+    private string tileSelect;
+    public string TileSelect
+    {
+        get { return tileSelect; }
+        set { tileSelect = value; }
     }
 
     // Version control

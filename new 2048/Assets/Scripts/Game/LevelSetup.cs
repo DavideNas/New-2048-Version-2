@@ -13,7 +13,7 @@ public class LevelSetup : MonoBehaviour
     private float gridOrigin;
 
     // space between cells
-    public float gridSpacing;        
+    public float gridSpacing;
 
     // value to store size of level grid
     private int sizeOfGrid;
@@ -23,12 +23,12 @@ public class LevelSetup : MonoBehaviour
 
     // Matrix to store basic grid coordinate
     public static Vector2[,] gridCoord;
-
+    
     // 
     private List<float> lineCoord;
 
     // Scene Camera
-    public Camera cam; 
+    public Camera cam;
 
     private void Start()
     {
@@ -53,7 +53,6 @@ public class LevelSetup : MonoBehaviour
         // Create new grid on the base
         for (int i = 0; i < sizeOfGrid; i++)
         {
-            
             for (int j = 0; j < sizeOfGrid; j++)
             {
                 posX = gridOrigin + ((gridSpacing + 2) * i);
@@ -103,5 +102,28 @@ public class LevelSetup : MonoBehaviour
         float cameraPosZ = -10; //-1* ((float)sizeOfGrid+1) * distanceCamera * distanceCamera;
 
         cam.transform.position = new Vector3(cameraPosX, cameraPosY, cameraPosZ);
+    }
+
+    public void RestoreStage()
+    {
+        //ScoreText.text = Utils.UpdateScore(Utils.score);            // Load Score
+
+        for (int t = 0; t < GameControlManager.Instance.allTilesValue.Count; t++)
+        {
+            string tile = "ClassicTile"; //Utils.tileSelect;                // Load Tile type
+            GameObject loadedTile = (GameObject)Instantiate(Resources.Load(tile, typeof(GameObject)), GameControlManager.Instance.allTilesPositions[t], Quaternion.identity);
+            loadedTile.GetComponent<Tile>().targetPosition = GameControlManager.Instance.allTilesPositions[t];
+                                                                            // Load Tile in a his own position
+
+            loadedTile.GetComponent<Tile>().tilePoints = GameControlManager.Instance.allTilesValue[t];
+                                                                            // Set point value for loaded tile
+                                                                            
+            loadedTile.GetComponent<Tile>().tileValue.text = GameControlManager.Instance.allTilesValue[t].ToString();
+                                                                            // Set Value for loaded Tile                                                             
+
+            loadedTile.GetComponent<Tile>().SetColor(GameControlManager.Instance.allTilesValue[t]);
+                                                                            // Set Color for loaded Tile
+        }
+        GameControlManager.Instance.CountTiles();                           // Update stage state
     }
 }

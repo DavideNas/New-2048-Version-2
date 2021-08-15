@@ -13,9 +13,25 @@ public class UIManager : MonoBehaviour
 
     public GameObject Menu;
 
+    public GameObject GameOver;
+
     public Text levelSize;
 
     public Text version;
+
+    [SerializeField]
+    private Text scoreRecord;
+    public String ScoreRecord {
+        get { return scoreRecord.ToString(); }
+        set { scoreRecord.text = value; }
+    }
+
+    [SerializeField]
+    private Text actualPoints;
+    public String ActualPoints {
+        get { return actualPoints.ToString(); }
+        set { actualPoints.text = value; }
+    }
 
     // UI Sound Button
     public GameObject SoundOn;

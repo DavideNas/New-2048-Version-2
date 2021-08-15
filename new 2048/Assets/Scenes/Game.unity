@@ -917,9 +917,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2017365592}
         m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
-        m_MethodName: LookGridLeaderboard
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11052,6 +11052,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1849701513}
   - component: {fileID: 1849701512}
+  - component: {fileID: 1849701514}
   m_Layer: 0
   m_Name: Game Scripts
   m_TagString: Untagged
@@ -11071,7 +11072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bffa1789cad7a3b43a1bbb097a33e151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellGrid: {fileID: 533559290809436288, guid: 0de0b64fbebfe984ebda1080638726b2, type: 3}
+  cellGrid: {fileID: 5872065778759959781, guid: 7b3f527f9ad56924783e7dc9504072bb, type: 3}
   gridSpacing: 0
   cam: {fileID: 1925713992}
 --- !u!4 &1849701513
@@ -11088,6 +11089,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1849701514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849701511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efc19dd1567a794eb438550de460367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1867947858
 GameObject:
   m_ObjectHideFlags: 0
@@ -11490,8 +11503,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SettingView: {fileID: 380036502}
   Menu: {fileID: 348228839}
+  GameOver: {fileID: 1719090607}
   levelSize: {fileID: 156739525}
   version: {fileID: 471692254}
+  scoreRecord: {fileID: 843965126}
+  actualPoints: {fileID: 802299285}
   SoundOn: {fileID: 1076458978}
   SoundOff: {fileID: 183776362}
   PlayDisconnected: {fileID: 303524312}
