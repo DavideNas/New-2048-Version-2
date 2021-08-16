@@ -11052,7 +11052,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1849701513}
   - component: {fileID: 1849701512}
-  - component: {fileID: 1849701514}
+  - component: {fileID: 1849701515}
   m_Layer: 0
   m_Name: Game Scripts
   m_TagString: Untagged
@@ -11089,7 +11089,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1849701514
+--- !u!114 &1849701515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11098,9 +11098,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1849701511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4efc19dd1567a794eb438550de460367, type: 3}
+  m_Script: {fileID: 11500000, guid: d5eb489bd47c2854ebc5ddd2e84dfc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocity: 0
+  moveCount: 0
+  allScoreStack: []
+  allTilesPositions: []
+  allTilesValue: []
+  tilesOnGrid: []
 --- !u!1 &1867947858
 GameObject:
   m_ObjectHideFlags: 0

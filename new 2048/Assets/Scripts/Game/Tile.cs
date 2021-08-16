@@ -44,7 +44,7 @@ public class Tile : MonoBehaviour
             transform.localScale = evolutionScale;
         }
 
-        if (GameSystem.Instance.LuckyTile())
+        if (GameControlManager.Instance.LuckyTile())
         {
             coinTile = true;
             getCoin.SetActive(true);

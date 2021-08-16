@@ -9,9 +9,21 @@ public class ControlManager : MonoBehaviour
     // status sound
     public bool SoundFx;
 
+    private float spawnDelayTime;
+    public float SpawnDelayTime { 
+        get { return spawnDelayTime; }
+        set { spawnDelayTime = value; }
+    }
+
+    private int startTilesNo;
+    public int StartTilesNo { 
+        get { return startTilesNo; }
+        set { startTilesNo = value; }
+    }
+
     // Theme color of tiles
     private string activeTheme;
-    public string ActiveTheme{ 
+    public string ActiveTheme { 
         get{ return activeTheme; }
         set{ activeTheme = value; }
     }
@@ -80,14 +92,18 @@ public class ControlManager : MonoBehaviour
         DepthTile = 5f;
 
         TileSelect = "ClassicTile";
-
+        
+        ActiveTheme = "pastel";
+        
         Magnitude = 125;
 
         NewGame = true;
 
         SoundFx = true;
 
-        ActiveTheme = "pastel";
+        StartTilesNo = 2;
+
+        SpawnDelayTime = 0.15f;
     }
 
     // Tile type

@@ -7,7 +7,7 @@ public class Undo : MonoBehaviour
 {
     public void UndoMove()
     {
-        if (GameControlManager.Instance.UndoReady && (GameSystem.Instance.NewMove > 1))
+        if (GameControlManager.Instance.UndoReady && (GameControlManager.Instance.NewMove > 1))
         {
             SoundFX.Instance.SpecialUndoFX();
 
@@ -23,7 +23,7 @@ public class Undo : MonoBehaviour
 
             //Game.ScoreText.text = "";//(string) Utils.allScoreStack[allScoreStack.Count -1];
             GameControlManager.Instance.moveCount--;
-            GameSystem.Instance.NewMove--;
+            GameControlManager.Instance.NewMove--;
 
             GameControlManager.Instance.LoadPrevStage();
         }
