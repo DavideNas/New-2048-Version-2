@@ -19,12 +19,13 @@ public class UIManager : MonoBehaviour
 
     public Text version;
 
-    [SerializeField]
+    public Text scoreRecord;
+    /*[SerializeField]
     private Text scoreRecord;
     public String ScoreRecord {
         get { return scoreRecord.ToString(); }
         set { scoreRecord.text = value; }
-    }
+    }*/
 
     [SerializeField]
     private Text actualPoints;
@@ -131,6 +132,7 @@ public class UIManager : MonoBehaviour
 
     */
 
+    [System.Obsolete]
     public static void SendEmail()
     {
         string email = "brickpointgames@gmail.com";

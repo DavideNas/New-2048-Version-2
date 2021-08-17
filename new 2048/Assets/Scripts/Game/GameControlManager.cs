@@ -8,7 +8,12 @@ public class GameControlManager : MonoBehaviour
 
     private bool prevScoreSaved;
 
-    public float velocity;
+    private float velocity;
+    public float Velocity{
+        get { return velocity; }
+        set { velocity = value; }
+    }
+
 
     private int continueCount;
     public int ContinueCount{
@@ -50,20 +55,18 @@ public class GameControlManager : MonoBehaviour
     public List<float> allTilesValue;
 
     // info for Undo check
-    public static List<Vector3> allTilesPositionsUndo;
-    public static List<float> allTilesValueUndo;
+    public List<Vector3> allTilesPositionsUndo;
+    public List<float> allTilesValueUndo;
 
-    public static List<List<float>> allTilesValueStack;
-    public static List<List<Vector3>> allTilesPositionsStack;
+    public List<List<float>> allTilesValueStack;
+    public List<List<Vector3>> allTilesPositionsStack;
 
     // list to manage tiles on stage
-    public List<GameObject> tilesOnGrid;
+    private List<GameObject> tilesOnGrid;
 
     // lists to manipulate rows and columns
-    private static List<GameObject>[] rowGrid;
-    private static List<GameObject>[] colGrid;
-
-    public static Vector2[,] gridCoord;
+    public List<GameObject>[] rowGrid;
+    public List<GameObject>[] colGrid;
 
     private void Start()
     {
@@ -78,7 +81,7 @@ public class GameControlManager : MonoBehaviour
 
         moveCount = 0;
 
-        velocity = 20f;
+        Velocity = 20f;
 
         ContinueCount = 0;
 
@@ -102,8 +105,6 @@ public class GameControlManager : MonoBehaviour
         randX = 0f;
         randY = 0f;
 
-        gridCoord = new Vector2[ControlManager.Instance.GridSize, ControlManager.Instance.GridSize];
-
         if(ControlManager.Instance.NewGame)
         {
             for (int x = 0; x < ControlManager.Instance.StartTilesNo; x++)
@@ -111,6 +112,33 @@ public class GameControlManager : MonoBehaviour
                 Invoke("GenerateNewTile", ControlManager.Instance.SpawnDelayTime + (x * (ControlManager.Instance.SpawnDelayTime / ControlManager.Instance.StartTilesNo)));
             }
         }
+    }
+
+    void GenerateNewTile()
+    {
+        float newTileValue = 2f;
+        // spawn new tile at random position
+        Vector3 locationForNewTile = GetRandomLocationForNewTile();
+        string tile = ControlManager.Instance.TileSelect;
+        float chanceOfTwo = UnityEngine.Random.Range(0, 100);
+        if (chanceOfTwo > 91f)
+        {
+            tile = ControlManager.Instance.TileSelect;
+            newTileValue = 4f;
+        }
+        GameObject newTile = (GameObject)Instantiate(Resources.Load(tile, typeof(GameObject)), locationForNewTile, Quaternion.identity);
+        newTile.GetComponent<Tile>().targetPosition = locationForNewTile;
+        newTile.GetComponent<Tile>().tilePoints = newTileValue;
+        newTile.GetComponent<Tile>().tileValue.text = newTileValue.ToString();
+        //newTile.GetComponent<Tile>().SetColor(newTileValue);
+
+        //newTile.GetComponent<Tile>().coinTile = false;
+        //newTile.GetComponent<Tile>().getCoin.SetActive(false);
+
+        UpdateTilesList();
+        UpdateGrid();
+        CountTiles();
+        Debug.Log("New tile on grid at : "+locationForNewTile);
     }
 
     // update points on stage with zeros
@@ -129,7 +157,7 @@ public class GameControlManager : MonoBehaviour
 
         scoreUpdated += score.ToString();
 
-        float recordcheck = float.Parse(UIManager.Instance.ScoreRecord.ToString());
+        float recordcheck = float.Parse(UIManager.Instance.scoreRecord.text);
         if (Math.Abs(recordcheck) <= Math.Abs(score))
         {
             long newRecord = Convert.ToInt64(score);
@@ -145,9 +173,9 @@ public class GameControlManager : MonoBehaviour
             if (8 == ControlManager.Instance.GridSize)
                 PlayGamesScript.AggiungiPunteggioClassifica8x8(newRecord);
 
-            UIManager.Instance.ScoreRecord = score.ToString();
+            UIManager.Instance.scoreRecord.text = score.ToString();
         }
-
+        
         return scoreUpdated;
     }
 
@@ -230,7 +258,7 @@ public class GameControlManager : MonoBehaviour
                 loadedTile.GetComponent<Tile>().tileValue.text = allTilesValueUndo[t].ToString();
                 // Set Value for loaded Tile
 
-                loadedTile.GetComponent<Tile>().SetColor(allTilesValueUndo[t]);
+                //loadedTile.GetComponent<Tile>().SetColor(allTilesValueUndo[t]);
                 // Set Color for loaded Tile
             }
         }
@@ -254,7 +282,7 @@ public class GameControlManager : MonoBehaviour
         }
     }
     
-    public void UpdateTilesList()
+    void UpdateTilesList()
     {
         CountTiles();
         try
@@ -322,6 +350,21 @@ public class GameControlManager : MonoBehaviour
         }
     }
 
+    // Convert coord in grid position - Y line
+    public int Find_Y(GameObject tileObject)
+    {
+        int yFound = -1;
+        for (int x = 0; x < ControlManager.Instance.GridSize; x++)
+        {
+            for (int y = 0; y < ControlManager.Instance.GridSize; y++)
+            {
+                if ((tileObject.transform.position.x == LevelSetup.Instance.gridCoord[x, y].x) && (tileObject.transform.position.y == LevelSetup.Instance.gridCoord[x, y].y))
+                    yFound = y;
+            }
+        }
+        return yFound;
+    }
+
     void MapColumns(GameObject thisTileInColumn)
     {
         try
@@ -344,27 +387,14 @@ public class GameControlManager : MonoBehaviour
         {
             for (int y = 0; y < ControlManager.Instance.GridSize; y++)
             {
-                if ((tileObject.transform.position.x == gridCoord[x, y].x) && (tileObject.transform.position.y == gridCoord[x, y].y))
+                if ((tileObject.transform.position.x == LevelSetup.Instance.gridCoord[x, y].x) && (tileObject.transform.position.y == LevelSetup.Instance.gridCoord[x, y].y))
                     xFound = x;
             }
         }
         return xFound;
     }
 
-    // Convert coord in grid position - Y line
-    public int Find_Y(GameObject tileObject)
-    {
-        int yFound = -1;
-        for (int x = 0; x < ControlManager.Instance.GridSize; x++)
-        {
-            for (int y = 0; y < ControlManager.Instance.GridSize; y++)
-            {
-                if ((tileObject.transform.position.x == gridCoord[x, y].x) && (tileObject.transform.position.y == gridCoord[x, y].y))
-                    yFound = y;
-            }
-        }
-        return yFound;
-    }
+
 
     // 1 of 2 -> monobehaviour inherit class
     void OutOfRangeErrorFix()
@@ -390,7 +420,7 @@ public class GameControlManager : MonoBehaviour
         try
         {
             GameObject[] allTiles = (GameObject[])FindObjectsOfType(typeof(GameObject));
-            //ResetMaps();
+            ResetMaps();
             tilesOnGrid.Clear();
             for (int k = 0; k < allTiles.Length; k++)
             {
@@ -412,6 +442,15 @@ public class GameControlManager : MonoBehaviour
         }
     }
 
+    void ResetMaps()
+    {
+        for(int k=0; k < ControlManager.Instance.GridSize;k++)
+        {
+            rowGrid[k] = new List<GameObject>();
+            colGrid[k] = new List<GameObject>();
+        }
+    }
+
         // Save void cells to extract new position
     public void CheckFreePos()
     {
@@ -421,7 +460,7 @@ public class GameControlManager : MonoBehaviour
             voidOnGrid.Clear();
 
             // Fill voidOnGrid with element from gridCoord
-            foreach (Vector2 coordToCompare in gridCoord)
+            foreach (Vector2 coordToCompare in LevelSetup.Instance.gridCoord)
                 voidOnGrid.Add(coordToCompare);
 
             // Scan every tile on stage
@@ -490,7 +529,7 @@ public class GameControlManager : MonoBehaviour
     }
 
         // return random X and Y position
-    public Vector3 GetRandomLocationForNewTile()
+    Vector3 GetRandomLocationForNewTile()
     {
         CountTiles();
         CheckFreePos();
@@ -593,7 +632,7 @@ public class GameControlManager : MonoBehaviour
             newTile.GetComponent<Tile>().targetPosition = newTilePos;
             newTile.GetComponent<Tile>().tilePoints = tileToEvolveValue;
             newTile.GetComponent<Tile>().tileValue.text = tileToEvolveValue.ToString();
-            newTile.GetComponent<Tile>().SetColor(tileToEvolveValue);
+            //newTile.GetComponent<Tile>().SetColor(tileToEvolveValue);
 
             newTile.GetComponent<Tile>().evolvedTile = true;
 
@@ -618,29 +657,5 @@ public class GameControlManager : MonoBehaviour
             return false;
     }
 
-    void GenerateNewTile()
-    {
-        float newTileValue = 2f;
-        // spawn new tile at random position
-        Vector3 locationForNewTile = GameControlManager.Instance.GetRandomLocationForNewTile();
-        string tile = ControlManager.Instance.TileSelect;
-        float chanceOfTwo = UnityEngine.Random.Range(0, 100);
-        if (chanceOfTwo > 91f)
-        {
-            tile = ControlManager.Instance.TileSelect;
-            newTileValue = 4f;
-        }
-        GameObject newTile = (GameObject)Instantiate(Resources.Load(tile, typeof(GameObject)), locationForNewTile, Quaternion.identity);
-        newTile.GetComponent<Tile>().targetPosition = locationForNewTile;
-        newTile.GetComponent<Tile>().tilePoints = newTileValue;
-        newTile.GetComponent<Tile>().tileValue.text = newTileValue.ToString();
-        newTile.GetComponent<Tile>().SetColor(newTileValue);
-
-        newTile.GetComponent<Tile>().coinTile = false;
-        newTile.GetComponent<Tile>().getCoin.SetActive(false);
-
-        GameControlManager.Instance.UpdateTilesList();
-        GameControlManager.Instance.UpdateGrid();
-        GameControlManager.Instance.CountTiles();
-    }
+    
 }

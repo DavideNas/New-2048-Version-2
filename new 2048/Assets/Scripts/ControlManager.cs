@@ -79,10 +79,10 @@ public class ControlManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
-    }
+/*    }
     
     private void Start()
-    {
+    {*/
         CurrentVersion = Application.version + " - 23 (Main Release)";
 
         CoinChance = 2f;

@@ -9,15 +9,15 @@ public class Tile : MonoBehaviour
 
     public bool fixedTile = false;
 
-    public GameObject getCoin;
+    //public GameObject getCoin;
 
     public bool coinTile = false;
 
-    public GameObject cube, cube2, cube3, cube4, cube5, basePlane;
+    public GameObject cube;
 
     public TextMeshPro tileValue;
 
-    private float velocity = GameControlManager.Instance.velocity;
+    //private float velocity = GameControlManager.Instance.Velocity;
 
     private Vector3 initTileScale = new Vector3(0.8f,0.8f,1f);
     private Vector3 targetScale = new Vector3(1f,1f,1f);
@@ -47,12 +47,12 @@ public class Tile : MonoBehaviour
         if (GameControlManager.Instance.LuckyTile())
         {
             coinTile = true;
-            getCoin.SetActive(true);
+            //getCoin.SetActive(true);
         }
         else
         {
             coinTile = false;
-            getCoin.SetActive(false);
+            //getCoin.SetActive(false);
         }
     }
 
@@ -71,7 +71,7 @@ public class Tile : MonoBehaviour
 
         if ((transform.position != targetPosition) && (!fixedTile))
         {
-            float step = (velocity * Time.deltaTime) * speed;
+            float step = (GameControlManager.Instance.Velocity * Time.deltaTime) * speed;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
             isMoving = true;
@@ -99,7 +99,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void SetColor(float value)
+    /*public void SetColor(float value)
     {
         Color tileColor;
         tileColor = Colorize.Instance.GetColorForTile(value);
@@ -123,5 +123,5 @@ public class Tile : MonoBehaviour
             var planeRenderer = basePlane.GetComponent<Renderer>();
             planeRenderer.material.SetColor("_Color", tileColor);
         }
-    }
+    }*/
 }

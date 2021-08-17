@@ -6,6 +6,8 @@ using System;
 
 public class LevelSetup : MonoBehaviour
 {
+    public static LevelSetup Instance { get; private set; }
+
     // graphic element to create base grid
     public GameObject cellGrid;
 
@@ -15,14 +17,8 @@ public class LevelSetup : MonoBehaviour
     // space between cells
     public float gridSpacing;
 
-    // value to store size of level grid
-    private int sizeOfGrid;
-
-    // set the distance of tiles to Z axis
-    private float depthOfTile;
-
     // Matrix to store basic grid coordinate
-    public static Vector2[,] gridCoord;
+    public Vector2[,] gridCoord;
     
     // 
     private List<float> lineCoord;
@@ -32,11 +28,12 @@ public class LevelSetup : MonoBehaviour
 
     private void Start()
     {
+        if( null == Instance )
+            Instance = this;
+
         gridOrigin = 0;
         gridSpacing = 0.2f;
-        sizeOfGrid = ControlManager.Instance.GridSize;
-        depthOfTile = ControlManager.Instance.DepthTile;
-        gridCoord = new Vector2[sizeOfGrid, sizeOfGrid];
+        gridCoord = new Vector2[ControlManager.Instance.GridSize, ControlManager.Instance.GridSize];
         lineCoord = new List<float>();
 
         InitGrid();
@@ -47,26 +44,26 @@ public class LevelSetup : MonoBehaviour
     {
         float posX;
         float posY;
-        gridOrigin = -(gridSpacing * sizeOfGrid)/(sizeOfGrid/2);
+        gridOrigin = -(gridSpacing * ControlManager.Instance.GridSize)/(ControlManager.Instance.GridSize/2);
         SetCameraSize();
 
         // Create new grid on the base
-        for (int i = 0; i < sizeOfGrid; i++)
+        for (int i = 0; i < ControlManager.Instance.GridSize; i++)
         {
-            for (int j = 0; j < sizeOfGrid; j++)
+            for (int j = 0; j < ControlManager.Instance.GridSize; j++)
             {
                 posX = gridOrigin + ((gridSpacing + 2) * i);
                 posY = gridOrigin + ((gridSpacing + 2) * j);
 
                 // Instantiate new cell on grid
-                Instantiate(cellGrid, new Vector3(posX, posY, depthOfTile + 0.5f), Quaternion.identity);
+                Instantiate(cellGrid, new Vector3(posX, posY, ControlManager.Instance.DepthTile + 0.5f), Quaternion.identity);
 
                 // Save position for every possible coord on the grid
                 gridCoord[i, j] = new Vector2(posX, posY);
             }
         }
 
-        for (int t = 0; t < sizeOfGrid; t++)
+        for (int t = 0; t < ControlManager.Instance.GridSize; t++)
         {
             lineCoord.Add(gridCoord[t, 0].x);
         }
@@ -79,17 +76,17 @@ public class LevelSetup : MonoBehaviour
 
         double divisore;       // variabile da usare come divisore per correggere la posizione dello stage
 
-        cam.orthographicSize = (float) sizeOfGrid*2 + aspectRatio*2;
+        cam.orthographicSize = (float) ControlManager.Instance.GridSize*2 + aspectRatio*2;
 
-        if (sizeOfGrid >= 10)
+        if (ControlManager.Instance.GridSize >= 10)
         {
             divisore = 4;
         }
-        else if ((sizeOfGrid >= 7) && (sizeOfGrid <= 9))
+        else if ((ControlManager.Instance.GridSize >= 7) && (ControlManager.Instance.GridSize <= 9))
         {
             divisore = 3;
         }
-        else if ((sizeOfGrid >= 4) && (sizeOfGrid <= 6)) 
+        else if ((ControlManager.Instance.GridSize >= 4) && (ControlManager.Instance.GridSize <= 6)) 
         {
             divisore = 2;
         }else
@@ -97,8 +94,8 @@ public class LevelSetup : MonoBehaviour
             divisore = 1.5;
         }
 
-        float cameraPosX = sizeOfGrid - (aspectRatio/(float)divisore);
-        float cameraPosY = sizeOfGrid - (aspectRatio/(float)divisore);
+        float cameraPosX = ControlManager.Instance.GridSize - (aspectRatio/(float)divisore);
+        float cameraPosY = ControlManager.Instance.GridSize - (aspectRatio/(float)divisore);
         float cameraPosZ = -10; //-1* ((float)sizeOfGrid+1) * distanceCamera * distanceCamera;
 
         cam.transform.position = new Vector3(cameraPosX, cameraPosY, cameraPosZ);
@@ -121,7 +118,7 @@ public class LevelSetup : MonoBehaviour
             loadedTile.GetComponent<Tile>().tileValue.text = GameControlManager.Instance.allTilesValue[t].ToString();
                                                                             // Set Value for loaded Tile                                                             
 
-            loadedTile.GetComponent<Tile>().SetColor(GameControlManager.Instance.allTilesValue[t]);
+            //loadedTile.GetComponent<Tile>().SetColor(GameControlManager.Instance.allTilesValue[t]);
                                                                             // Set Color for loaded Tile
         }
         GameControlManager.Instance.CountTiles();                           // Update stage state

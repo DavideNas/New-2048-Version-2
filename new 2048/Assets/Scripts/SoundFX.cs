@@ -74,7 +74,7 @@ public class SoundFX : MonoBehaviour
 
     public void ClickFX()
     {
-        Debug.Log(ControlManager.Instance.SoundFx);
+        //(ControlManager.Instance.SoundFx);
         if (ControlManager.Instance.SoundFx)
             m_ClickFX.Play();
     }

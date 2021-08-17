@@ -6,7 +6,7 @@ using UnityEngine;
 public class Brush : MonoBehaviour
 {
     public static Brush Instance { get; private set; }
-    private int brushCost = 0;
+    //private int brushCost = 0;
 
     private int tilesFound = 0;
 

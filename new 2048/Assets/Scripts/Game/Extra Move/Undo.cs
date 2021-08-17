@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Undo : MonoBehaviour
 {
-    public void UndoMove()
+    public static void UndoMove()
     {
         if (GameControlManager.Instance.UndoReady && (GameControlManager.Instance.NewMove > 1))
         {
