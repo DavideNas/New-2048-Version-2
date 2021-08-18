@@ -21,7 +21,7 @@ public class LevelSetup : MonoBehaviour
     public Vector2[,] gridCoord;
     
     // 
-    private List<float> lineCoord;
+    public List<float> lineCoord;
 
     // Scene Camera
     public Camera cam;
@@ -70,7 +70,7 @@ public class LevelSetup : MonoBehaviour
     }
 
     // set camera distance
-    void SetCameraSize()
+    public void SetCameraSize()
     {
         float aspectRatio = (Screen.height / (float)Screen.width);
 

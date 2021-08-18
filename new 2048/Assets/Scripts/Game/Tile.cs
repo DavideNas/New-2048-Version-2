@@ -99,9 +99,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    /*public void SetColor(float value)
+    public void SetColor(float value)
     {
-        Color tileColor;
+        /*Color tileColor;
         tileColor = Colorize.Instance.GetColorForTile(value);
         var cubeRenderer = cube.GetComponent<Renderer>();
         cubeRenderer.material.SetColor("_Color", tileColor);
@@ -122,6 +122,6 @@ public class Tile : MonoBehaviour
 
             var planeRenderer = basePlane.GetComponent<Renderer>();
             planeRenderer.material.SetColor("_Color", tileColor);
-        }
-    }*/
+        }*/
+    }
 }

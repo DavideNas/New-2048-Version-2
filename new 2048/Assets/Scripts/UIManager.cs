@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject GameOver;
 
+    public GameObject ContinueOption;
+
+    public GameObject RestartPopup;
+
     public Text levelSize;
 
     public Text version;
@@ -95,6 +99,36 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         Instance.Menu.SetActive(false);
+    }
+
+    // Close GameOver
+    public static void BtnCloseGameOver()
+    {
+        SoundFX.Instance.ClickFX();
+        Instance.GameOver.SetActive(false);
+    }
+
+    public static void BtnRestart()
+    {
+        //Game.newMove = 0;
+        Instance.RestartPopup.SetActive(true);
+        Instance.Menu.SetActive(false);
+        SoundFX.Instance.AlertFX();
+    }
+
+    public static void BtnCloseRestart()
+    {
+        Instance.RestartPopup.SetActive(false);
+        SoundFX.Instance.ClickFX();
+    }
+
+    public static void BtnConfirmRestart()
+    {
+        /*Script to restart game scene*/
+        Instance.RestartPopup.SetActive(false);
+        SoundFX.Instance.ClickFX();
+        ControlManager.Instance.NewGame = true;
+        SceneManager.LoadScene("Game");
     }
 
     public static void SwitchSound()

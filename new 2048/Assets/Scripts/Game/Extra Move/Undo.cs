@@ -22,7 +22,7 @@ public class Undo : MonoBehaviour
             GameControlManager.Instance.UndoReady = false;
 
             //Game.ScoreText.text = "";//(string) Utils.allScoreStack[allScoreStack.Count -1];
-            GameControlManager.Instance.moveCount--;
+            GameControlManager.Instance.MoveCount--;
             GameControlManager.Instance.NewMove--;
 
             GameControlManager.Instance.LoadPrevStage();

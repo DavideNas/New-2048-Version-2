@@ -6,7 +6,7 @@ using UnityEngine;
 public class Swipe : MonoBehaviour
 {
     private bool tap, swipeLeft, swipeRight, swipeUp, swipeDown;
-    private bool isDraging = false;
+    private bool isDraging;
     private Vector2 startTouch, swipeDelta;
 
     public bool Tap { get { return tap; } }
@@ -16,6 +16,10 @@ public class Swipe : MonoBehaviour
     public bool SwipeUp { get { return swipeUp; } }
     public bool SwipeDown { get { return swipeDown; } }
 
+    void Start() {
+        isDraging = false;    
+    }
+
     private void Update()
     {
         tap = swipeLeft = swipeRight = swipeUp = swipeDown = false;
@@ -24,21 +28,13 @@ public class Swipe : MonoBehaviour
         if ((!UIManager.Instance.SettingView.activeSelf) && (!UIManager.Instance.Menu.activeSelf) && (!UIManager.Instance.GameOver.activeSelf))
         {
             if (Input.GetKey("left"))
-            {
                 swipeLeft = true;
-            }
             else if (Input.GetKey("right"))
-            {
                 swipeRight = true;
-            }
             else if (Input.GetKey("down"))
-            {
                 swipeDown = true;
-            }
             else if (Input.GetKey("up"))
-            {
-                swipeUp = true;
-            }
+                swipeUp = true;            
         }
         #endregion
 
@@ -91,7 +87,7 @@ public class Swipe : MonoBehaviour
             // Quale direzione?
             float vector_x = swipeDelta.x;
             float vector_y = swipeDelta.y;
-
+            //Debug.Log("Hai mosso col mouse");
 
             // camera obliqua
             // Sinistra o destra ?
