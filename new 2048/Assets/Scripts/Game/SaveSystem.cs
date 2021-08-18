@@ -1,18 +1,43 @@
-﻿using System.Collections.Specialized;
-using System.Collections;
+﻿using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Specialized;
 using System.Collections.Generic;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System;
+
 using UnityEngine;
 
-public static class SaveSystem {
+public class SaveSystem : MonoBehaviour
+{
+    public static SaveSystem Instance { get; private set; }
 
-    public static float score = 0f;
+    private float score;
+    public float Score {
+        get{ return score; }
+        set{ score = value; }
+    }
 
-    private static readonly string SAVE_FOLDER = Application.persistentDataPath + "/Saves/";
+    private string SAVE_FOLDER;
 
-    public static void Init() {
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
+    
+    private void Start()
+    {
+        SAVE_FOLDER = Application.persistentDataPath + "/Saves/";
+    }
+
+    public void Init() 
+    {
         // Test if Save Folder exists
         if (!Directory.Exists(SAVE_FOLDER)) {
             // Create Save Foldera
@@ -20,9 +45,10 @@ public static class SaveSystem {
         }
     }
 
-    public static void Save(string data)
+    public void Save(string data)
     {
         // create a formatter var to
+
         BinaryFormatter formatter = new BinaryFormatter();
 
         string path = SAVE_FOLDER + "save_point.fun";
@@ -33,7 +59,7 @@ public static class SaveSystem {
         stream.Close();
     }
 
-    public static string Load()
+    public string Load()
     {
         string path = SAVE_FOLDER + "save_point.fun";
         if (File.Exists(path))
@@ -50,7 +76,7 @@ public static class SaveSystem {
         }
     }
 
-    public static bool DataExists()
+    public bool DataExists()
     {
         // Check if any data file already exist
         string path = SAVE_FOLDER + "save_point.fun";
@@ -60,7 +86,7 @@ public static class SaveSystem {
             return false;
     }
 
-    public static void SaveState()
+    public void SaveState()
     {
         GameControlManager.Instance.allTilesValue.Clear();
         GameControlManager.Instance.allTilesPositions.Clear();
@@ -69,35 +95,40 @@ public static class SaveSystem {
 
         SaveObject saveObject = new SaveObject                              // Save an istant of Stage 
         {
-            totalScore_level = (int)score,                                  // 1- score
+            totalScore_level = (int)Score,                                  // 1- score
             tileType_level = ControlManager.Instance.TileSelect,            // 2- type of tyles
             gridSize_level = ControlManager.Instance.GridSize,              // 3- gridsize
             tileToSpawnNo_level = ControlManager.Instance.NewTilesPerMove,  // 4- # tile to spawn each turn
-            tilesOnGrid_level = new List<float>(GameControlManager.Instance.allTilesValue),             
+            tilesOnGrid_level = new List<float>(GameControlManager.Instance.allTilesValue),
                                                                             // 5- level of any tile on stage
-            tilesPositions_level = new List<Vector3>(GameControlManager.Instance.allTilesPositions),    
+            tilesPositions_level = new List<Vector3>(GameControlManager.Instance.allTilesPositions),
                                                                             // 6- position (x,y,z) of any tile
-            continueOpt = GameControlManager.Instance.ContinueCount,        // 7- continue option
+            continueOpt = ControlManager.Instance.ContinueCount,            // 7- continue option
         };
         string json = JsonUtility.ToJson(saveObject);
-        SaveSystem.Save(json);
+        Instance.Save(json);
 
+        UnityEngine.Debug.Log("State saved ! -> "+GameControlManager.Instance.allTilesValue);
     }
 
-    public static void LoadState()                                          // Load data of previous game
+    public void LoadState()                                                 // Load data of previous game
     {
         SaveObject data = new SaveObject();
-        string saveString = SaveSystem.Load();
+        string saveString = Instance.Load();
         JsonUtility.FromJsonOverwrite(saveString, data);
-        score = (int)data.totalScore_level;                                 // 1- score
+        Score = (int)data.totalScore_level;                                 // 1- score
         ControlManager.Instance.TileSelect = (string)data.tileType_level;                           
                                                                             // 2- type of tyles
         ControlManager.Instance.GridSize = (int)data.gridSize_level;        // 3- gridsize
         ControlManager.Instance.NewTilesPerMove = (int)data.tileToSpawnNo_level;
                                                                             // 4- # tile to spawn each turn
-        GameControlManager.Instance.allTilesValue = new List<float>(data.tilesOnGrid_level);            // 5- level of any tile on stage
-        GameControlManager.Instance.allTilesPositions = new List<Vector3>(data.tilesPositions_level);   // 6- position (x,y,z) of any tile
-        GameControlManager.Instance.ContinueCount = data.continueOpt;       // 7- continue option
+        GameControlManager.Instance.allTilesValue = new List<float>(data.tilesOnGrid_level);
+                                                                            // 5- level of any tile on stage
+        GameControlManager.Instance.allTilesPositions = new List<Vector3>(data.tilesPositions_level);
+                                                                            // 6- position (x,y,z) of any tile
+        ControlManager.Instance.ContinueCount = data.continueOpt;           // 7- continue option
+
+        UnityEngine.Debug.Log("State loaded !");
     }
 
     private class SaveObject                        // data structure for Save/Load stage info

@@ -70,6 +70,12 @@ public class ControlManager : MonoBehaviour
         set { newGame = value; }
     }
 
+    private int continueCount;
+    public int ContinueCount {
+        get { return continueCount; }
+        set { continueCount = value; }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -79,10 +85,10 @@ public class ControlManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
-/*    }
+    }
     
     private void Start()
-    {*/
+    {
         CurrentVersion = Application.version + " - 23 (Main Release)";
 
         CoinChance = 2f;
@@ -104,6 +110,8 @@ public class ControlManager : MonoBehaviour
         StartTilesNo = 2;
 
         SpawnDelayTime = 0.15f;
+
+        SaveSystem.Instance.Score = 0f;
     }
 
     // Tile type

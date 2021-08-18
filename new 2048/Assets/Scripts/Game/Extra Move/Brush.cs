@@ -16,8 +16,8 @@ public class Brush : MonoBehaviour
     }
 
     public void BrushTiles() {
-        GameControlManager.Instance.ContinueCount++;
-        Debug.Log("Brush power !");
+        ControlManager.Instance.ContinueCount++;
+        //Debug.Log("Brush power !");
         //if ( (Utils.coins - brushCost) > -1 )
         //{
             tilesFound = 0;

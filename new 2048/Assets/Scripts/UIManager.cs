@@ -87,6 +87,34 @@ public class UIManager : MonoBehaviour
         Instance.SettingView.SetActive(false);
     }
 
+    // Close settings
+    public static void BtnCloseContinue()
+    {
+        SoundFX.Instance.ClickFX();
+        Instance.ContinueOption.SetActive(false);
+    }
+
+    public static void ContinueLast()
+    {
+        SoundFX.Instance.ClickFX();
+        //AdsManager.Instance.ShowAd(null);
+        //SaveSystem.Instance.LoadState();
+        ControlManager.Instance.NewGame = false;
+        SceneManager.LoadScene("Game");
+        Instance.ContinueOption.SetActive(false);
+    }
+
+    public static void NotContinueLast()
+    {
+        SoundFX.Instance.ClickFX();
+        ControlManager.Instance.ContinueCount = 0;
+        //Game.newMove = 0;
+        ControlManager.Instance.NewGame = true;
+        SaveSystem.Instance.Score = 0;
+        SceneManager.LoadScene("Game");
+        Instance.ContinueOption.SetActive(false);
+    }
+
     // Open menu
     public static void BtnOpenMenu()
     {
@@ -156,7 +184,7 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         //AdsManager.Instance.ShowAd(null);
-        //Utils.SaveState();
+        SaveSystem.Instance.SaveState();
         SceneManager.LoadScene("Main");
     }
 

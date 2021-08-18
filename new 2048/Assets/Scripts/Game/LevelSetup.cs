@@ -36,11 +36,11 @@ public class LevelSetup : MonoBehaviour
         gridCoord = new Vector2[ControlManager.Instance.GridSize, ControlManager.Instance.GridSize];
         lineCoord = new List<float>();
 
-        InitGrid();
+        //InitGrid();
     }
 
     // init grid of levels
-    private void InitGrid()
+    public void InitGrid()
     {
         float posX;
         float posY;

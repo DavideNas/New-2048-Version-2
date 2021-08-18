@@ -33,12 +33,6 @@ public class GameControlManager : MonoBehaviour
         set { countPossibleMove = value; }
     }
 
-    private int continueCount;
-    public int ContinueCount{
-        get { return continueCount; }
-        set { continueCount = value; }
-    }
-
     private bool undoReady;
     public bool UndoReady{ 
         get { return undoReady; }
@@ -81,10 +75,7 @@ public class GameControlManager : MonoBehaviour
     public int MoveCount{
         get { return moveCount; }
         set { moveCount = value; }
-    }
-
-    // actual points of game stage
-    private float score;                 
+    }               
 
     // previous points of game stage
     private float prevScore;
@@ -118,14 +109,14 @@ public class GameControlManager : MonoBehaviour
 
         PrevScoreSaved = false;
 
-        score = 0f;
+        SaveSystem.Instance.Score = 0f;
         prevScore = 0f;
 
         MoveCount = 0;
 
         Velocity = 20f;
 
-        ContinueCount = 0;
+        ControlManager.Instance.ContinueCount = 0;
 
         AllTilesAreSteady = false;
 
@@ -157,10 +148,18 @@ public class GameControlManager : MonoBehaviour
 
         if(ControlManager.Instance.NewGame)
         {
+            LevelSetup.Instance.InitGrid(); 
             for (int x = 0; x < ControlManager.Instance.StartTilesNo; x++)
             {
                 Invoke("GenerateNewTile", ControlManager.Instance.SpawnDelayTime + (x * (ControlManager.Instance.SpawnDelayTime / ControlManager.Instance.StartTilesNo)));
             }
+        }
+        else
+        {
+            //Debug.Log("Load Previous Data !");
+            SaveSystem.Instance.LoadState();
+            LevelSetup.Instance.InitGrid();                         // Create base grid
+            LevelSetup.Instance.RestoreStage();
         }
     }
 
@@ -193,6 +192,16 @@ public class GameControlManager : MonoBehaviour
             Debug.Log("An Error Of Overlay Tile Occurred During Update: " + ex);
             OutOfRangeErrorFix();
         }
+    }
+
+    void OnApplicationPause()
+    {
+        SaveSystem.Instance.SaveState();
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveSystem.Instance.SaveState();
     }
 
     private void CheckUserInput()
@@ -257,7 +266,7 @@ public class GameControlManager : MonoBehaviour
         GC.Collect();
         CountPossibleMove = 0;
 
-        if (ContinueCount > 0 )
+        if (ControlManager.Instance.ContinueCount > 0 )
         {
             UIManager.Instance.ContinueOption.SetActive(false);
         }else
@@ -404,7 +413,7 @@ public class GameControlManager : MonoBehaviour
         UpdateTilesList();
         UpdateGrid();
         CountTiles();
-        Debug.Log("New tile on grid at : "+locationForNewTile);
+        //Debug.Log("New tile on grid at : "+locationForNewTile);
     }
 
     // update points on stage with zeros
@@ -412,22 +421,22 @@ public class GameControlManager : MonoBehaviour
     {
         if (!PrevScoreSaved)
         {
-            prevScore = score;
+            prevScore = SaveSystem.Instance.Score;
             PrevScoreSaved = true;
             allScoreStack.Clear();
         }
 
         string scoreUpdated = "";
-        score += points / 2;
+        SaveSystem.Instance.Score += points / 2;
 
-        allScoreStack.Add(score);                               // save score into list for Undo recover
+        allScoreStack.Add(SaveSystem.Instance.Score);                               // save score into list for Undo recover
 
-        scoreUpdated += score.ToString();
+        scoreUpdated += SaveSystem.Instance.Score.ToString();
 
         float recordcheck = float.Parse(UIManager.Instance.scoreRecord.text);
-        if (Math.Abs(recordcheck) <= Math.Abs(score))
+        if (Math.Abs(recordcheck) <= Math.Abs(SaveSystem.Instance.Score))
         {
-            long newRecord = Convert.ToInt64(score);
+            long newRecord = Convert.ToInt64(SaveSystem.Instance.Score);
 
             if (3 == ControlManager.Instance.GridSize)
                 PlayGamesScript.AggiungiPunteggioClassifica3x3(newRecord);
@@ -440,7 +449,7 @@ public class GameControlManager : MonoBehaviour
             if (8 == ControlManager.Instance.GridSize)
                 PlayGamesScript.AggiungiPunteggioClassifica8x8(newRecord);
 
-            UIManager.Instance.scoreRecord.text = score.ToString();
+            UIManager.Instance.scoreRecord.text = SaveSystem.Instance.Score.ToString();
         }
         
         return scoreUpdated;
@@ -487,7 +496,7 @@ public class GameControlManager : MonoBehaviour
     public void LoadPrevStage()
     {
         UIManager.Instance.ActualPoints = prevScore.ToString();
-        score = prevScore;
+        SaveSystem.Instance.Score = prevScore;
 
         if (allTilesValueStack.Count > 1)
         {
@@ -541,7 +550,7 @@ public class GameControlManager : MonoBehaviour
     // delete all tiles from grid
     public void ClearStage()
     {
-        score = 0f;
+        SaveSystem.Instance.Score = 0f;
         // Clean all stage from Tiles
         foreach (GameObject singleTile in tilesOnGrid)          
         {
@@ -1157,7 +1166,7 @@ public class GameControlManager : MonoBehaviour
                                 {
                                     matchCounter++;
                                     isMatching = true;
-                                    Debug.Log("Some match for LEFT direction");
+                                    //Debug.Log("Some match for LEFT direction");
                                     SoundFX.Instance.MatchTilesFX();
                                 }
                             }
@@ -1211,7 +1220,7 @@ public class GameControlManager : MonoBehaviour
                                 {
                                     matchCounter++;
                                     isMatching = true;
-                                    Debug.Log("Some match for RIGHT direction");
+                                    //Debug.Log("Some match for RIGHT direction");
                                     SoundFX.Instance.MatchTilesFX();
                                 }
                             }
@@ -1265,7 +1274,7 @@ public class GameControlManager : MonoBehaviour
                                 {
                                     matchCounter++;
                                     isMatching = true;
-                                    Debug.Log("Some match for DOWN direction");
+                                    //Debug.Log("Some match for DOWN direction");
                                     SoundFX.Instance.MatchTilesFX();
                                 }
                             }
@@ -1321,7 +1330,7 @@ public class GameControlManager : MonoBehaviour
                                 {
                                     matchCounter++;
                                     isMatching = true;
-                                    Debug.Log("Some match for UP direction");
+                                    //Debug.Log("Some match for UP direction");
                                     SoundFX.Instance.MatchTilesFX();
                                 }
                             }

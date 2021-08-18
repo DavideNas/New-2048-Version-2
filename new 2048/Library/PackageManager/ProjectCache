@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637648564751907472
+      ticks: 637648915482958337
     m_Hash: 4223738807
   m_LockFileStatus:
     m_FilePath: C:/Users/dnase/Develop/Unity/New-2048-Version-2/new 2048/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637648566026392138
+      ticks: 637648915720754634
     m_Hash: 58697389
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
