@@ -116,7 +116,7 @@ public class GameControlManager : MonoBehaviour
 
         Velocity = 20f;
 
-        ControlManager.Instance.ContinueCount = 0;
+        
 
         AllTilesAreSteady = false;
 
@@ -148,6 +148,8 @@ public class GameControlManager : MonoBehaviour
 
         if(ControlManager.Instance.NewGame)
         {
+            ControlManager.Instance.ContinueCount = 0;
+            AdManager.Instance.ShowInterstitial();
             LevelSetup.Instance.InitGrid(); 
             for (int x = 0; x < ControlManager.Instance.StartTilesNo; x++)
             {
@@ -156,6 +158,7 @@ public class GameControlManager : MonoBehaviour
         }
         else
         {
+            AdManager.Instance.ShowInterstitial();
             //Debug.Log("Load Previous Data !");
             SaveSystem.Instance.LoadState();
             LevelSetup.Instance.InitGrid();                         // Create base grid
@@ -220,7 +223,7 @@ public class GameControlManager : MonoBehaviour
             {
                 if ((!TilesAreMoving()) && (MoveCount == NewMove))
                 {
-                    Debug.Log("MoveCount -> "+MoveCount+", NewMove -> "+NewMove);
+                    //Debug.Log("MoveCount -> "+MoveCount+", NewMove -> "+NewMove);
                     StartCoroutine(CheckNextInput());
                     MoveAllTiles(Vector3.left);
                 }

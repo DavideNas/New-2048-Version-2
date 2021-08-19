@@ -78,6 +78,7 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         Instance.SettingView.SetActive(true);
+        AdManager.Instance.ShowInterstitial();
     }
 
     // Close settings
@@ -96,6 +97,7 @@ public class UIManager : MonoBehaviour
 
     public static void ContinueLast()
     {
+        //AdManager.Instance.ShowInterstitial();
         SoundFX.Instance.ClickFX();
         //AdsManager.Instance.ShowAd(null);
         SaveSystem.Instance.LoadState();
@@ -106,6 +108,7 @@ public class UIManager : MonoBehaviour
 
     public static void NotContinueLast()
     {
+        //AdManager.Instance.ShowInterstitial();
         SoundFX.Instance.ClickFX();
         ControlManager.Instance.ContinueCount = 0;
         //Game.newMove = 0;
@@ -118,6 +121,7 @@ public class UIManager : MonoBehaviour
     // Open menu
     public static void BtnOpenMenu()
     {
+        AdManager.Instance.ShowInterstitial();
         SoundFX.Instance.ClickFX();
         Instance.Menu.SetActive(true);
     }
@@ -138,6 +142,7 @@ public class UIManager : MonoBehaviour
 
     public static void BtnRestart()
     {
+        AdManager.Instance.ShowInterstitial();
         //Game.newMove = 0;
         Instance.RestartPopup.SetActive(true);
         Instance.Menu.SetActive(false);

@@ -7,6 +7,7 @@ public class Undo : MonoBehaviour
 {
     public static void UndoMove()
     {
+        AdManager.Instance.ShowInterstitial();
         if (GameControlManager.Instance.UndoReady && (GameControlManager.Instance.NewMove > 1))
         {
             SoundFX.Instance.SpecialUndoFX();

@@ -17,6 +17,8 @@ public class Brush : MonoBehaviour
 
     public void BrushTiles() {
         ControlManager.Instance.ContinueCount++;
+
+        //AdManager.Instance.ShowRewardedVideo();
         //Debug.Log("Brush power !");
         //if ( (Utils.coins - brushCost) > -1 )
         //{
