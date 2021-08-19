@@ -98,7 +98,7 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         //AdsManager.Instance.ShowAd(null);
-        //SaveSystem.Instance.LoadState();
+        SaveSystem.Instance.LoadState();
         ControlManager.Instance.NewGame = false;
         SceneManager.LoadScene("Game");
         Instance.ContinueOption.SetActive(false);

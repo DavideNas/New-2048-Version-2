@@ -108,7 +108,7 @@ public class SaveSystem : MonoBehaviour
         string json = JsonUtility.ToJson(saveObject);
         Instance.Save(json);
 
-        UnityEngine.Debug.Log("State saved ! -> "+GameControlManager.Instance.allTilesValue);
+        //UnityEngine.Debug.Log("State saved ! -> "+GameControlManager.Instance.allTilesValue);
     }
 
     public void LoadState()                                                 // Load data of previous game
@@ -128,7 +128,7 @@ public class SaveSystem : MonoBehaviour
                                                                             // 6- position (x,y,z) of any tile
         ControlManager.Instance.ContinueCount = data.continueOpt;           // 7- continue option
 
-        UnityEngine.Debug.Log("State loaded !");
+        //UnityEngine.Debug.Log("State loaded ! GridSize: "+ ControlManager.Instance.GridSize);
     }
 
     private class SaveObject                        // data structure for Save/Load stage info

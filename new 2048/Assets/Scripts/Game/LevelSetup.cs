@@ -31,17 +31,20 @@ public class LevelSetup : MonoBehaviour
         if( null == Instance )
             Instance = this;
 
-        gridOrigin = 0;
-        gridSpacing = 0.2f;
-        gridCoord = new Vector2[ControlManager.Instance.GridSize, ControlManager.Instance.GridSize];
-        lineCoord = new List<float>();
-
         //InitGrid();
     }
 
     // init grid of levels
     public void InitGrid()
     {
+        //gridCoord.Clear();
+        //gridOrigin.Clear();
+        
+        gridOrigin = 0;
+        gridSpacing = 0.2f;
+        gridCoord = new Vector2[ControlManager.Instance.GridSize, ControlManager.Instance.GridSize];
+        lineCoord = new List<float>();
+
         float posX;
         float posY;
         gridOrigin = -(gridSpacing * ControlManager.Instance.GridSize)/(ControlManager.Instance.GridSize/2);

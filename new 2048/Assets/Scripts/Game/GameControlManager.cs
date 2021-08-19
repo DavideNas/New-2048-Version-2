@@ -160,6 +160,13 @@ public class GameControlManager : MonoBehaviour
             SaveSystem.Instance.LoadState();
             LevelSetup.Instance.InitGrid();                         // Create base grid
             LevelSetup.Instance.RestoreStage();
+
+            //UIManager.Instance.ActualPoints = SaveSystem.Instance.Score.ToString();
+
+            /*CheckFreePos();
+            UpdateTilesList();
+            UpdateGrid();
+            CountTiles();*/
         }
     }
 
@@ -213,6 +220,7 @@ public class GameControlManager : MonoBehaviour
             {
                 if ((!TilesAreMoving()) && (MoveCount == NewMove))
                 {
+                    Debug.Log("MoveCount -> "+MoveCount+", NewMove -> "+NewMove);
                     StartCoroutine(CheckNextInput());
                     MoveAllTiles(Vector3.left);
                 }
@@ -812,25 +820,25 @@ public class GameControlManager : MonoBehaviour
     {
         //try 
         //{
-            CountTiles();
-            CheckFreePos();
+        CountTiles();
+        CheckFreePos();
 
-            if (0 < voidOnGrid.Count) 
-            {
-                // *estraggo una cella libera dalla griglia
-                int randIndex = UnityEngine.Random.Range(0, voidOnGrid.Count);
+        //if (0 < voidOnGrid.Count) 
+        //{
+        // *estraggo una cella libera dalla griglia
+        int randIndex = UnityEngine.Random.Range(0, voidOnGrid.Count);
 
-                // *coordinata x della cella libera
-                randX = voidOnGrid[randIndex].x;
+        // *coordinata x della cella libera
+        randX = voidOnGrid[randIndex].x;
 
-                // *coordinata y della cella libera
-                randY = voidOnGrid[randIndex].y;
+        // *coordinata y della cella libera
+        randY = voidOnGrid[randIndex].y;
 
-                return new Vector3(randX, randY, ControlManager.Instance.DepthTile);
-            } else
-            {
-                return new Vector3(0,0,0);
-            }
+        return new Vector3(randX, randY, ControlManager.Instance.DepthTile);
+        //} else
+        //{
+        //    return new Vector3(0,0,0);
+        //}
         /*}
         catch (IndexOutOfRangeException ex)
         {

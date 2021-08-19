@@ -93,25 +93,26 @@ public class ControlManager : MonoBehaviour
 
         CoinChance = 2f;
 
-        NewTilesPerMove = 1;
+        SpawnDelayTime = 0.15f;
 
         DepthTile = 5f;
 
+        Magnitude = 125;
+
+        SoundFx = true;
+
+        // Value to init into Level Setup Class
         TileSelect = "ClassicTile";
         
         ActiveTheme = "pastel";
         
-        Magnitude = 125;
-
-        NewGame = true;
-
-        SoundFx = true;
+        //NewGame = true;
 
         StartTilesNo = 2;
 
-        SpawnDelayTime = 0.15f;
-
         SaveSystem.Instance.Score = 0f;
+        
+        NewTilesPerMove = 1;
     }
 
     // Tile type

@@ -10,7 +10,7 @@ public class Levels : MonoBehaviour
     }
 
     public static void Grid3x3()
-    {
+    {            
         ControlManager.Instance.GridSize = 3;
         ControlManager.Instance.NewTilesPerMove = 1;
         if (SaveSystem.Instance.DataExists())
@@ -20,6 +20,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
+
             ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
@@ -29,7 +30,7 @@ public class Levels : MonoBehaviour
     public static void Grid4x4()
     {
         ControlManager.Instance.GridSize = 4;
-        ControlManager.Instance.NewTilesPerMove = 1;
+        ControlManager.Instance.NewTilesPerMove = 1;    
         if (SaveSystem.Instance.DataExists())
         {
             UIManager.Instance.ContinueOption.SetActive(true);
@@ -44,7 +45,7 @@ public class Levels : MonoBehaviour
     }
 
     public static void Grid5x5()
-    {
+    {            
         ControlManager.Instance.GridSize = 5;
         ControlManager.Instance.NewTilesPerMove = 2;
         if (SaveSystem.Instance.DataExists())
@@ -54,6 +55,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
+
             ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
@@ -88,6 +90,7 @@ public class Levels : MonoBehaviour
         }
         else
         {
+            
             ControlManager.Instance.NewGame = true;
             //Utils.coinChance = 0f;
             SceneManager.LoadScene("Game");
