@@ -21,12 +21,6 @@ public class GameControlManager : MonoBehaviour
         set { velocity = value; }
     }
 
-    /*private bool undoOk;
-    public bool UndoOk{
-        get{ return undoOk; }
-        set { undoOk = value; }
-    }*/
-
     private int countPossibleMove;
     private int CountPossibleMove{
         get { return countPossibleMove; }
@@ -109,22 +103,19 @@ public class GameControlManager : MonoBehaviour
 
         PrevScoreSaved = false;
 
-        SaveSystem.Instance.Score = 0f;
+        ControlManager.Instance.Score = 0f;
+
         prevScore = 0f;
 
         MoveCount = 0;
 
         Velocity = 20f;
 
-        
-
         AllTilesAreSteady = false;
 
         SizeScreen = Screen.width;
 
         TilePosAreChanged = false;
-
-        //UndoOk = false;
 
         allScoreStack = new List<float>();
         allTilesValueStack = new List<List<float>>();
@@ -146,10 +137,12 @@ public class GameControlManager : MonoBehaviour
         randX = 0f;
         randY = 0f;
 
+        SaveSystem.Init();
+
         if(ControlManager.Instance.NewGame)
         {
             ControlManager.Instance.ContinueCount = 0;
-            AdManager.Instance.ShowInterstitial();
+            AdManager.ShowInterstitial();
             LevelSetup.Instance.InitGrid(); 
             for (int x = 0; x < ControlManager.Instance.StartTilesNo; x++)
             {
@@ -158,13 +151,10 @@ public class GameControlManager : MonoBehaviour
         }
         else
         {
-            AdManager.Instance.ShowInterstitial();
-            //Debug.Log("Load Previous Data !");
-            SaveSystem.Instance.LoadState();
+            AdManager.ShowInterstitial();
+            StateManager.LoadState();
             LevelSetup.Instance.InitGrid();                         // Create base grid
             LevelSetup.Instance.RestoreStage();
-
-            //UIManager.Instance.ActualPoints = SaveSystem.Instance.Score.ToString();
 
             /*CheckFreePos();
             UpdateTilesList();
@@ -206,12 +196,12 @@ public class GameControlManager : MonoBehaviour
 
     void OnApplicationPause()
     {
-        SaveSystem.Instance.SaveState();
+        StateManager.SaveState();
     }
 
     void OnApplicationQuit()
     {
-        SaveSystem.Instance.SaveState();
+        StateManager.SaveState();
     }
 
     private void CheckUserInput()
@@ -223,7 +213,6 @@ public class GameControlManager : MonoBehaviour
             {
                 if ((!TilesAreMoving()) && (MoveCount == NewMove))
                 {
-                    //Debug.Log("MoveCount -> "+MoveCount+", NewMove -> "+NewMove);
                     StartCoroutine(CheckNextInput());
                     MoveAllTiles(Vector3.left);
                 }
@@ -273,7 +262,7 @@ public class GameControlManager : MonoBehaviour
     }
 
     bool GameOver()
-    {
+    {        
         GC.Collect();
         CountPossibleMove = 0;
 
@@ -340,7 +329,6 @@ public class GameControlManager : MonoBehaviour
         if (CountPossibleMove > 0)
         {
             // continue to play
-            // Debug.Log("Found " + countPossibleMove + "possible matches");
             return false;
         }
         else
@@ -376,7 +364,6 @@ public class GameControlManager : MonoBehaviour
         CheckFreePos();
 
         //After we have waited 5 seconds print the time again.
-        //UnityEngine.Debug.Log("Now player can move again : moveTot -> " + Utils.moveCount);
     }
 
     bool TilesAreMoving()
@@ -432,22 +419,22 @@ public class GameControlManager : MonoBehaviour
     {
         if (!PrevScoreSaved)
         {
-            prevScore = SaveSystem.Instance.Score;
+            prevScore = ControlManager.Instance.Score;
             PrevScoreSaved = true;
             allScoreStack.Clear();
         }
 
         string scoreUpdated = "";
-        SaveSystem.Instance.Score += points / 2;
+        ControlManager.Instance.Score += points / 2;
 
-        allScoreStack.Add(SaveSystem.Instance.Score);                               // save score into list for Undo recover
+        allScoreStack.Add(ControlManager.Instance.Score);                               // save score into list for Undo recover
 
-        scoreUpdated += SaveSystem.Instance.Score.ToString();
+        scoreUpdated += ControlManager.Instance.Score.ToString();
 
         float recordcheck = float.Parse(UIManager.Instance.scoreRecord.text);
-        if (Math.Abs(recordcheck) <= Math.Abs(SaveSystem.Instance.Score))
+        if (Math.Abs(recordcheck) <= Math.Abs(ControlManager.Instance.Score))
         {
-            long newRecord = Convert.ToInt64(SaveSystem.Instance.Score);
+            long newRecord = Convert.ToInt64(ControlManager.Instance.Score);
 
             if (3 == ControlManager.Instance.GridSize)
                 PlayGamesScript.AggiungiPunteggioClassifica3x3(newRecord);
@@ -460,7 +447,7 @@ public class GameControlManager : MonoBehaviour
             if (8 == ControlManager.Instance.GridSize)
                 PlayGamesScript.AggiungiPunteggioClassifica8x8(newRecord);
 
-            UIManager.Instance.scoreRecord.text = SaveSystem.Instance.Score.ToString();
+            UIManager.Instance.scoreRecord.text = ControlManager.Instance.Score.ToString();
         }
         
         return scoreUpdated;
@@ -507,7 +494,7 @@ public class GameControlManager : MonoBehaviour
     public void LoadPrevStage()
     {
         UIManager.Instance.ActualPoints = prevScore.ToString();
-        SaveSystem.Instance.Score = prevScore;
+        ControlManager.Instance.Score = prevScore;
 
         if (allTilesValueStack.Count > 1)
         {
@@ -561,7 +548,7 @@ public class GameControlManager : MonoBehaviour
     // delete all tiles from grid
     public void ClearStage()
     {
-        SaveSystem.Instance.Score = 0f;
+        ControlManager.Instance.Score = 0f;
         // Clean all stage from Tiles
         foreach (GameObject singleTile in tilesOnGrid)          
         {
@@ -1362,10 +1349,4 @@ public class GameControlManager : MonoBehaviour
             OutOfRangeErrorFix();
         }
     }
-    /*char MoveAxis(Vector3 inAxis)
-    {
-        if (inAxis.x != 0)
-            return 'x';
-        else return 'y';
-    }*/
 }

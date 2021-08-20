@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LevelSetup : MonoBehaviour
 {
@@ -37,9 +38,11 @@ public class LevelSetup : MonoBehaviour
     // init grid of levels
     public void InitGrid()
     {
+        //PlayGamesScript.CaricaClassifica(ControlManager.Instance.GridSize);
+        
         //gridCoord.Clear();
         //gridOrigin.Clear();
-        
+
         gridOrigin = 0;
         gridSpacing = 0.2f;
         gridCoord = new Vector2[ControlManager.Instance.GridSize, ControlManager.Instance.GridSize];
@@ -49,7 +52,7 @@ public class LevelSetup : MonoBehaviour
         float posY;
         gridOrigin = -(gridSpacing * ControlManager.Instance.GridSize)/(ControlManager.Instance.GridSize/2);
         SetCameraSize();
-
+        
         // Create new grid on the base
         for (int i = 0; i < ControlManager.Instance.GridSize; i++)
         {

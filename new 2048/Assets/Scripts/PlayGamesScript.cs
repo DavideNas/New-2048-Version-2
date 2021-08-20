@@ -29,7 +29,6 @@ public class PlayGamesScript : MonoBehaviour
             PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
             PlayGamesPlatform.InitializeInstance(config);
             PlayGamesPlatform.DebugLogEnabled = true;
-
             platform = PlayGamesPlatform.Activate();
         }
     }
@@ -50,11 +49,8 @@ public class PlayGamesScript : MonoBehaviour
             {
                 ControlManager.Instance.GPlayConnection = false;
                 UIManager.Instance.PlayConnectionPending.SetActive(false);
-
                 UIManager.Instance.PlayConnectionError.SetActive(true);
-
                 //SSTools.ShowMessage("Connection Error", SSTools.Position.bottom, SSTools.Time.threeSecond);
-
                 Instance.Invoke("ConnectionError", 3f);
             }
         });
@@ -63,7 +59,6 @@ public class PlayGamesScript : MonoBehaviour
     void ConnectionError()
     {
         //SSTools.ShowMessage("End Connection Error", SSTools.Position.bottom, SSTools.Time.threeSecond);
-
         UIManager.Instance.PlayConnectionError.SetActive(false);
         ControlManager.Instance.SwitchConnection(ControlManager.Instance.GPlayConnection);
     }

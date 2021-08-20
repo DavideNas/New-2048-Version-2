@@ -24,12 +24,6 @@ public class UIManager : MonoBehaviour
     public Text version;
 
     public Text scoreRecord;
-    /*[SerializeField]
-    private Text scoreRecord;
-    public String ScoreRecord {
-        get { return scoreRecord.ToString(); }
-        set { scoreRecord.text = value; }
-    }*/
 
     [SerializeField]
     private Text actualPoints;
@@ -64,8 +58,8 @@ public class UIManager : MonoBehaviour
         }
 
         // Auto connect
-        if (false == ControlManager.Instance.GPlayConnection)
-            BtnGPlayConnection();
+        //if (false == ControlManager.Instance.GPlayConnection)
+        //    BtnGPlayConnection();
 
         if (!ControlManager.Instance.SoundFx) {
             Instance.SoundOn.SetActive(false);
@@ -78,7 +72,7 @@ public class UIManager : MonoBehaviour
     {
         SoundFX.Instance.ClickFX();
         Instance.SettingView.SetActive(true);
-        AdManager.Instance.ShowInterstitial();
+        AdManager.ShowInterstitial();
     }
 
     // Close settings
@@ -100,7 +94,7 @@ public class UIManager : MonoBehaviour
         //AdManager.Instance.ShowInterstitial();
         SoundFX.Instance.ClickFX();
         //AdsManager.Instance.ShowAd(null);
-        SaveSystem.Instance.LoadState();
+        StateManager.LoadState();
         ControlManager.Instance.NewGame = false;
         SceneManager.LoadScene("Game");
         Instance.ContinueOption.SetActive(false);
@@ -113,7 +107,7 @@ public class UIManager : MonoBehaviour
         ControlManager.Instance.ContinueCount = 0;
         //Game.newMove = 0;
         ControlManager.Instance.NewGame = true;
-        SaveSystem.Instance.Score = 0;
+        ControlManager.Instance.Score = 0;
         SceneManager.LoadScene("Game");
         Instance.ContinueOption.SetActive(false);
     }
@@ -121,7 +115,7 @@ public class UIManager : MonoBehaviour
     // Open menu
     public static void BtnOpenMenu()
     {
-        AdManager.Instance.ShowInterstitial();
+        AdManager.ShowInterstitial();
         SoundFX.Instance.ClickFX();
         Instance.Menu.SetActive(true);
     }
@@ -142,7 +136,7 @@ public class UIManager : MonoBehaviour
 
     public static void BtnRestart()
     {
-        AdManager.Instance.ShowInterstitial();
+        AdManager.ShowInterstitial();
         //Game.newMove = 0;
         Instance.RestartPopup.SetActive(true);
         Instance.Menu.SetActive(false);
@@ -187,10 +181,11 @@ public class UIManager : MonoBehaviour
 
     public static void BtnHome()
     {
-        SoundFX.Instance.ClickFX();
+        SoundFX.Instance.SpecialContinueExtraFX();
         //AdsManager.Instance.ShowAd(null);
-        SaveSystem.Instance.SaveState();
+        StateManager.SaveState();
         SceneManager.LoadScene("Main");
+        //SSTools.ShowMessage("Button Home Pressed", SSTools.Position.bottom, SSTools.Time.threeSecond);
     }
 
     /*public GameObject PopupContinue;
@@ -198,6 +193,30 @@ public class UIManager : MonoBehaviour
     public Text ScoreRecord;
 
     */
+
+    /*public static void ResetPoints()
+    {
+        Record = 0;
+        UpdatePoints(Record);
+        PlayGamesScript.GuardaClassifica();
+    }
+
+    public static void BtnShowLadder()
+    {
+        SoundFX.Instance.ClickFX();
+        PlayGamesScript.AggiungiPunteggioClassifica4x4(scoreRecord);
+        ResetPoints();
+    }*/
+
+    public static void LookLeaderboard()
+    {
+        PlayGamesScript.GuardaClassifica();
+    }
+
+    public static void LookGridLeaderboard()
+    {
+        PlayGamesScript.GuardaClassificaGrid(ControlManager.Instance.GridSize);
+    }
 
     [System.Obsolete]
     public static void SendEmail()
@@ -214,9 +233,10 @@ public class UIManager : MonoBehaviour
         return WWW.EscapeURL(url).Replace("+", "%20");
     }
 
-    public static void LookGridLeaderboard()
+    public static void OpenPrivacyURL()
     {
-        PlayGamesScript.GuardaClassificaGrid(ControlManager.Instance.GridSize);
+        SoundFX.Instance.ClickFX();
+        Application.OpenURL("https://www.privacypolicygenerator.info/live.php?token=zTRool3KNsYlwMZQPJTOsvVbBv6FAoH8");
     }
 
     public static void BtnRateMe()

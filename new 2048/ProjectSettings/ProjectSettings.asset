@@ -176,7 +176,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.brickpointgames.newdmqo
   buildNumber: {}
-  AndroidBundleVersionCode: 24
+  AndroidBundleVersionCode: 26
   AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -268,8 +268,8 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  AndroidMinifyWithR8: 0
-  AndroidMinifyRelease: 0
+  AndroidMinifyWithR8: 1
+  AndroidMinifyRelease: 1
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150

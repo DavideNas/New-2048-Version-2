@@ -10,10 +10,10 @@ public class Levels : MonoBehaviour
     }
 
     public static void Grid3x3()
-    {            
+    {
         ControlManager.Instance.GridSize = 3;
         ControlManager.Instance.NewTilesPerMove = 1;
-        if (SaveSystem.Instance.DataExists())
+        if (SaveSystem.DataExists())
         {
             UIManager.Instance.ContinueOption.SetActive(true);
             SoundFX.Instance.AlertFX();
@@ -31,7 +31,7 @@ public class Levels : MonoBehaviour
     {
         ControlManager.Instance.GridSize = 4;
         ControlManager.Instance.NewTilesPerMove = 1;    
-        if (SaveSystem.Instance.DataExists())
+        if (SaveSystem.DataExists())
         {
             UIManager.Instance.ContinueOption.SetActive(true);
             SoundFX.Instance.AlertFX();
@@ -48,7 +48,7 @@ public class Levels : MonoBehaviour
     {            
         ControlManager.Instance.GridSize = 5;
         ControlManager.Instance.NewTilesPerMove = 2;
-        if (SaveSystem.Instance.DataExists())
+        if (SaveSystem.DataExists())
         {
             UIManager.Instance.ContinueOption.SetActive(true);
             SoundFX.Instance.AlertFX();
@@ -66,7 +66,7 @@ public class Levels : MonoBehaviour
     {
         ControlManager.Instance.GridSize = 6;
         ControlManager.Instance.NewTilesPerMove = 3;
-        if (SaveSystem.Instance.DataExists())
+        if (SaveSystem.DataExists())
         {
             UIManager.Instance.ContinueOption.SetActive(true);
             SoundFX.Instance.AlertFX();
@@ -83,7 +83,7 @@ public class Levels : MonoBehaviour
     {
         ControlManager.Instance.GridSize = 8;
         ControlManager.Instance.NewTilesPerMove = 4;
-        if (SaveSystem.Instance.DataExists())
+        if (SaveSystem.DataExists())
         {
             UIManager.Instance.ContinueOption.SetActive(true);
             SoundFX.Instance.AlertFX();
@@ -96,8 +96,7 @@ public class Levels : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
     }
-
-
+    
     public static void BtnLeft()
     {
         SwipeLevels.LeftDirection = true;

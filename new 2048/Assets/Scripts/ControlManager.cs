@@ -9,6 +9,12 @@ public class ControlManager : MonoBehaviour
     // status sound
     public bool SoundFx;
 
+    private float score;
+    public float Score {
+        get{ return score; }
+        set{ score = value; }
+    }
+
     private float spawnDelayTime;
     public float SpawnDelayTime { 
         get { return spawnDelayTime; }
@@ -89,7 +95,7 @@ public class ControlManager : MonoBehaviour
     
     private void Start()
     {
-        CurrentVersion = Application.version + " - 23 (Main Release)";
+        CurrentVersion = Application.version + " - 26 (Main Release)";
 
         CoinChance = 2f;
 
@@ -110,7 +116,7 @@ public class ControlManager : MonoBehaviour
 
         StartTilesNo = 2;
 
-        SaveSystem.Instance.Score = 0f;
+        Score = 0f;
         
         NewTilesPerMove = 1;
     }

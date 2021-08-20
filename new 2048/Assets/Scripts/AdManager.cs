@@ -9,18 +9,26 @@ using UnityEngine;
 
 public class AdManager : MonoBehaviour
 {
-    public static AdManager Instance { get; private set;}
-    private const string BANNER_ID = "ca-app-pub-3940256099942544/6300978111";
+    //public static AdManager Instance { get; private set;}
+
+    // FOR GOOGLE PLAY STORE
+    private const string BANNER_ID = "ca-app-pub-9352383645515305/2724497699";
+    private const string INTERSTITIAL_ID = "ca-app-pub-9352383645515305/5350661032";
+    private const string REWARDED_VIDEO_ID = "ca-app-pub-9352383645515305/2477085682";
+    
+
+    // FOR INTERNAL TESTING
+    /*private const string BANNER_ID = "ca-app-pub-3940256099942544/6300978111";
     private const string INTERSTITIAL_ID = "ca-app-pub-3940256099942544/1033173712";
-    private const string REWARDED_VIDEO_ID = "ca-app-pub-3940256099942544/5224354917";
+    private const string REWARDED_VIDEO_ID = "ca-app-pub-3940256099942544/5224354917";*/
 
-    private BannerView bannerAd;
-    private InterstitialAd interstitial;
-    private RewardedAd rewardedAd;
+    private static BannerView bannerAd;
+    private static InterstitialAd interstitial;
+    private static RewardedAd rewardedAd;
 
-    private AdRequest request;
+    private static AdRequest request;
 
-    private int timesTriedToShowInterstitial;
+    private static int timesTriedToShowInterstitial;
 
 /*    private void Awake()
     {
@@ -34,16 +42,16 @@ public class AdManager : MonoBehaviour
 
     private void Start()
     {  
-        if (null == Instance)
-            Instance = this;
+        /*if (null == Instance)
+            Instance = this;*/
   
         MobileAds.Initialize(InitializationStatusClient => { });
         //request = new AdRequest.Builder().Build();
-        this.bannerAd = new BannerView(BANNER_ID, AdSize.SmartBanner, AdPosition.Bottom);
-        this.interstitial = new InterstitialAd(INTERSTITIAL_ID);
-        this.rewardedAd = new RewardedAd(REWARDED_VIDEO_ID);
+        bannerAd = new BannerView(BANNER_ID, AdSize.SmartBanner, AdPosition.Bottom);
+        interstitial = new InterstitialAd(INTERSTITIAL_ID);
+        rewardedAd = new RewardedAd(REWARDED_VIDEO_ID);
 
-        ShowBanner();
+        //ShowBanner();
     }
 
     // BANNER MANAGEMENT
@@ -52,44 +60,44 @@ public class AdManager : MonoBehaviour
         GC.Collect();
         request = new AdRequest.Builder().Build();
 
-        this.bannerAd.LoadAd(request);
+        bannerAd.LoadAd(request);
     }
 
     public void HideBanner()
     {
-        this.bannerAd.Hide();
+        bannerAd.Hide();
     }
 
     // INTERSTITIAL MANAGEMENT
-    public void ShowInterstitial()
+    public static void ShowInterstitial()
     {
         GC.Collect();
         request = new AdRequest.Builder().Build();
 
-        this.interstitial.LoadAd(request);
+        interstitial.LoadAd(request);
 
         timesTriedToShowInterstitial++;
-        if(this.interstitial.IsLoaded() && timesTriedToShowInterstitial >= 5)
+        if(interstitial.IsLoaded() && timesTriedToShowInterstitial >= 5)
         {
-            this.interstitial.Show();
+            interstitial.Show();
             timesTriedToShowInterstitial = 0;
         }
     }
 
     // REWARDED VIDEO MANAGEMENT
-    public void ShowRewardedVideo()
+    public static void ShowRewardedVideo()
     {
         GC.Collect();
         request = new AdRequest.Builder().Build();
 
-        this.rewardedAd.LoadAd(request);
+        rewardedAd.LoadAd(request);
         
-        this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-        if (this.rewardedAd.IsLoaded()) 
-            this.rewardedAd.Show();
+        rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
+        if (rewardedAd.IsLoaded()) 
+            rewardedAd.Show();
     }
 
-    public void HandleUserEarnedReward(object sender, Reward args) 
+    public static void HandleUserEarnedReward(object sender, Reward args) 
     {
         UIManager.Instance.GameOver.SetActive(false);
         Brush.Instance.BrushTiles();
